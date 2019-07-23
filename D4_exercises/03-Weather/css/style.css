@@ -1,4 +1,16 @@
 /* TODO: Put your CSS code in here */
-.header {
+/* .header {
   display: flex;
+} */
+.form-control-borderless {
+  border: none;
+}
+body{
+  text-align: center;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
