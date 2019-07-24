@@ -19,13 +19,13 @@ class ApplicationController < Sinatra::Base
     {:session => @session}.to_json
   end
 
-  get '/sessions/:id/games' do
+  # get '/sessions/:id/games' do
 
-  end
+  # end
 
-  get '/games/:id/results' do
-    
-  end
+  # get '/games/:id/results' do
+
+  # end
 
   post '/sessions/:id/games' do
     request.body.rewind

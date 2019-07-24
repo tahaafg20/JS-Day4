@@ -75,7 +75,14 @@ function validation(e) {
                         return resp.json();
                       }) // Convert data to json
                       .then(function(data2) {
-                        console.log(data2);
+                        Object.keys(data2.game["player"]).forEach(function(key) {
+                          if (data2.game["player"][key].id === parseInt(data2.game["winner"])){
+                            var finalGameId = data2.game.id;
+                            var gameTime = data2.game["elapsed_time"];
+                            var winnerName = data2.game["player"][key].name;
+                            alert(`Here is the result for the game(${finalGameId}). CONGRATS ${winnerName}, you could win in ${gameTime} seconds.`);
+                          }
+                      });
                       });
                     var finalB = document.querySelector("#player2_race td.active");
                     currentPlaceA.classList.remove("active");
@@ -112,8 +119,16 @@ function validation(e) {
                         return resp.json();
                       }) // Convert data to json
                       .then(function(data3) {
-                        console.log(data3);
+                        Object.keys(data3.game["player"]).forEach(function(key) {
+                          if (data3.game["player"][key].id === parseInt(data3.game["winner"])){
+                            var finalGameId = data3.game.id;
+                            var gameTime = data3.game["elapsed_time"];
+                            var winnerName = data3.game["player"][key].name;
+                            alert(`Here is the result for the game(${finalGameId}). CONGRATS ${winnerName}, you could win in ${gameTime} seconds.`);
+                          }
                       });
+                      // console.log(data3)
+                    });
                     var finalA = document.querySelector("#player1_race td.active");
                     currentPlaceB.classList.remove("active");
                     alert("PLAYER B WON! (BLUE BUS)");
