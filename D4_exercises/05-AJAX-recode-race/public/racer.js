@@ -29,6 +29,7 @@ function validation(e) {
       }
     })
       .then(function(resp) {
+        
         return resp.json();
       }) // Convert data to json
       .then(function(data) {
@@ -44,15 +45,99 @@ function validation(e) {
           .then(function(resp1) {
             return resp1.json();
           }) // Convert data to json
-          .then(function(data1) {})
+          .then(function(data1) {
+            var playerAId = data1.game["player"][0].id;
+            var playerBId = data1.game["player"][1].id;
+            var gameId = data1.game["id"];
+            var winnerUrl = `/games/${gameId}/finish`;
+            countdown(document.getElementById("readyGo"), function() {
+              document.addEventListener("keyup", event => {
+                var firstPlace = document.querySelectorAll("tr td:first-child");
+                if (event.keyCode === 80) {
+                  // var playerA = document.querySelector("#player1_race")
+                  var currentPlaceA = document.querySelector("#player1_race td.active");
+                  var nextPlaceA = currentPlaceA.nextElementSibling;
+                  if (currentPlaceA.classList.contains("finish")) {
+                    stop();
+                    var stoppedTime1 = document.getElementById("sec").innerHTML;
+                    // document.removeEventListener("keyup");
+                    var winnerDetails = { "winner": `${parseInt(playerAId)}` ,
+                    "elapsed_time": `${parseInt(stoppedTime1)}`};
+                    fetch(winnerUrl, {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify(winnerDetails)
+                      })
+                      .then(function(resp) {
+                        
+                        return resp.json();
+                      }) // Convert data to json
+                      .then(function(data2) {
+                        console.log(data2);
+                      });
+                    var finalB = document.querySelector("#player2_race td.active");
+                    currentPlaceA.classList.remove("active");
+                    finalB.classList.remove("active");
+                    alert("PLAYER A WON! (RED BUS)");
+                    
+                    firstPlace.forEach(function(playerFirstPlace) {
+                      playerFirstPlace.classList.add("active");
+                      // currentPlaceB.classList.remove("active")
+                    });
+                  } else {
+                    currentPlaceA.classList.remove("active");
+                    nextPlaceA.classList.add("active");
+                  }
+                } else if (event.keyCode === 81) {
+                  // var playerB = document.querySelector("#player2_race")
+                  var currentPlaceB = document.querySelector("#player2_race td.active");
+                  var nextPlaceB = currentPlaceB.nextElementSibling;
+                  if (currentPlaceB.classList.contains("finish")) {
+                    stop();
+                    // document.removeEventListener("keyup", );
+                    var stoppedTime2 = document.getElementById("sec").innerHTML;
+                    var winnerDetails2 = { "winner": `${parseInt(playerBId)}` ,
+                    "elapsed_time": `${parseInt(stoppedTime2)}`};
+                    fetch(winnerUrl, {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify(winnerDetails2)
+                    })
+                      .then(function(resp) {
+                        
+                        return resp.json();
+                      }) // Convert data to json
+                      .then(function(data3) {
+                        console.log(data3);
+                      });
+                    var finalA = document.querySelector("#player1_race td.active");
+                    currentPlaceB.classList.remove("active");
+                    alert("PLAYER B WON! (BLUE BUS)");
+                    finalA.classList.remove("active");
+                    firstPlace.forEach(function(playerFirstPlace) {
+                      // currentPlaceA.classList.remove("active")
+                      playerFirstPlace.classList.add("active");
+                    });
+                  } else {
+                    currentPlaceB.classList.remove("active");
+                    nextPlaceB.classList.add("active");
+                  }
+                }
+              });
+            });
+          })
           .catch(function() {});
       })
       .catch(function() {
         // catch any errors
       });
-      function() {
-        play();
-      }
+      // function() {
+      //   play();
+      // }
     function countdown(parent, callback) {
       // This is the function we will call every 1000 ms using setInterval
 
@@ -97,9 +182,7 @@ function validation(e) {
 
     // Start a countdown by passing in the parentnode you want to use.
     // Also add a callback, where you start your game.
-    countdown(document.getElementById("readyGo"), function() {
-      play();
-    });
+    
     showGame();
     
   } else {
@@ -201,48 +284,6 @@ function reset() {
   document.getElementById("hour").innerHTML = "00";
 }
 
-function play() {
-  document.addEventListener("keyup", event => {
-    var firstPlace = document.querySelectorAll("tr td:first-child");
-    if (event.keyCode === 80) {
-      // var playerA = document.querySelector("#player1_race")
-      var currentPlaceA = document.querySelector("#player1_race td.active");
-      var nextPlaceA = currentPlaceA.nextElementSibling;
-      if (currentPlaceA.classList.contains("finish")) {
-        stop();
-        document.removeEventListener("keyup");
-        var finalB = document.querySelector("#player2_race td.active");
-        currentPlaceA.classList.remove("active");
-        finalB.classList.remove("active");
-        alert("PLAYER A WON! (RED BUS)");
-        
-        firstPlace.forEach(function(playerFirstPlace) {
-          playerFirstPlace.classList.add("active");
-          // currentPlaceB.classList.remove("active")
-        });
-      } else {
-        currentPlaceA.classList.remove("active");
-        nextPlaceA.classList.add("active");
-      }
-    } else if (event.keyCode === 81) {
-      // var playerB = document.querySelector("#player2_race")
-      var currentPlaceB = document.querySelector("#player2_race td.active");
-      var nextPlaceB = currentPlaceB.nextElementSibling;
-      if (currentPlaceB.classList.contains("finish")) {
-        document.removeEventListener("keyup");
-        stop();
-        var finalA = document.querySelector("#player1_race td.active");
-        currentPlaceB.classList.remove("active");
-        alert("PLAYER B WON! (BLUE BUS)");
-        finalA.classList.remove("active");
-        firstPlace.forEach(function(playerFirstPlace) {
-          // currentPlaceA.classList.remove("active")
-          playerFirstPlace.classList.add("active");
-        });
-      } else {
-        currentPlaceB.classList.remove("active");
-        nextPlaceB.classList.add("active");
-      }
-    }
-  });
-}
+// function play() {
+
+// }
