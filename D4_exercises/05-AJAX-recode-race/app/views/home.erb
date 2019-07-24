@@ -1,11 +1,119 @@
 <!DOCTYPE html>
 <html>
-<head>
-  
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body>
+    <%# BOOTSTRAP %>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<%# <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> %>
 
-</body>
 
+    <title>Recode Racer 🏎</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1 class="text-center">Recode Racer</h1>
+    <hr>
+    <!-- You race HTML code here -->
+    <div id="startgame_form"  >
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+            <!-- Tabs Titles -->
+
+            <!-- Icon -->
+            <h3>Input your names</h3>
+            <!-- Login Form -->
+            <form method="POST" action="/sessions">
+            Player(1) NAME (RED BUS)
+            <input type="text" id="player1" class="fadeIn second" name="player1name" placeholder="Player - 1 ">
+            Player(2) NAME (BLUE BUS)
+            <input type="text" id="player2" class="fadeIn third" name="player2name" placeholder="Player - 2 ">
+            <input type="submit"  value="submit" id="gamestart" >
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="readyGo"></div>
+
+
+<div class="d-none" id="gameBoard">
+    <table class="racer_table">
+      <tr id="player1_race">
+        <td class="active"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="finish"></td>
+        
+      </tr>
+      <tr id="player2_race">
+        <td class="active"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="finish"></td>
+      </tr>
+    </table>
+    <hr> 
+</div>
+    <script src="racer.js"></script>
+  </body>
 </html>

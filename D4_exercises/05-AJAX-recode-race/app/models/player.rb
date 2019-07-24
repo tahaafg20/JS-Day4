@@ -1,5 +1,6 @@
 class Player < ActiveRecord::Base
-    has_many :games
+    belongs_to :session
+    belongs_to :game 
     validates :name, presence: true
     validates :name, uniqueness: true
-  end
+end

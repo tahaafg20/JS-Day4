@@ -11,27 +11,37 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-
+    erb :"/home"
   end
 
   post '/sessions', provides: [:json] do
+    @session = Session.create()
+    {:session => @session}.to_json
+  end
+
+  get '/sessions/:id/games' do
 
   end
 
-  get '/sessions/:id/games', provides: [:json] do
+  get '/games/:id/results' do
 
   end
 
-  get '/games/:id/results', provides: [:json] do
-
+  post '/sessions/:id/games' do
+    request.body.rewind
+    @return = JSON.parse(request.body.read)
+    @newgame = Game.create(session_id: params[:id], status: "started")
+    @first_player = Player.create(name: @return["player1"],session_id: params[:id],game_id: @newgame.id)
+    @second_player= Player.create(name: @return["player2"],session_id: params[:id],game_id: @newgame.id)
+    game_hash = JSON.parse(@newgame.to_json)
+    game_hash[:player] = JSON.parse(@newgame.players.to_json)
+    # byebug
+    {:session_id => params[:id],:game => game_hash }.to_json
+    # {:session_id => params[:id]}.to_json
   end
 
-  post '/sessions/:id/games', provides: [:json] do
-
-  end
-
-  patch '/games/:id/finish', provides: [:json] do
-
+  patch '/games/:id/finish' do
+    
   end
 end
 
